@@ -12,7 +12,7 @@ Public Property IsAdmin As Boolean
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.WindowState = FormWindowState.Maximized
         lblTotal.Text = "₱0.00"
-        ' initialize product id mappings
+        ' initialize product id mappingss
         Cart.InitializeProductIds()
 
         ' use SQL-backed notification repository so notifications persist
