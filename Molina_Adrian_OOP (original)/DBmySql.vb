@@ -382,4 +382,14 @@ Module DBmySql
             Return New Tuple(Of Boolean, String)(False, "Error deleting product: " & ex.Message)
         End Try
     End Function
+    Public Function TestConnection() As Tuple(Of Boolean, String)
+        Try
+            Using conn = GetConnection()
+                conn.Open()
+                Return New Tuple(Of Boolean, String)(True, "OK")
+            End Using
+        Catch ex As Exception
+            Return New Tuple(Of Boolean, String)(False, ex.Message & " | " & ex.GetType().ToString())
+        End Try
+    End Function
 End Module

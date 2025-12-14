@@ -176,6 +176,7 @@
     </Compile>
     <Compile Include="InventoryAnalytics.vb" />
     <Compile Include="InventoryAuditManager.vb" />
+    <Compile Include="InventorySync.vb" />
     <Compile Include="LoginForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +185,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>

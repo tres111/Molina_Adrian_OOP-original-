@@ -207,14 +207,41 @@ Private Sub CheckoutForm_Load(sender As Object, e As EventArgs) Handles MyBase.L
         If result.Item1 Then
             ' Success! Show confirmation
             MessageBox.Show(result.Item2 & vbCrLf & "Thank you for your purchase!" & vbCrLf & vbCrLf & "Your cart has been cleared.", "Order Placed Successfully", MessageBoxButtons.OK, MessageBoxIcon.Information)
-            
-            ' Reset local Cart arrays for top-level forms using Cart.vb
+
+            ' Reset local Cart arrays for top-level forms using Cart.vb and clear DB cart (defensive)
             Try
                 Cart.ResetCart()
             Catch ex As Exception
                 Debug.WriteLine("Cart.ResetCart() - Note: Using database cart instead - " & ex.Message)
             End Try
-            
+            Try
+                DBEcommerce.ClearCart(userId)
+            Catch ex As Exception
+                Debug.WriteLine("DBEcommerce.ClearCart() failed: " & ex.Message)
+            End Try
+
+            ' Reset UI: subtotal/total and input fields to defaults to be ready for next transaction
+            Try
+                Dim lblSubtotal As Label = Me.Controls("lblSubtotal")
+                Dim lblTotal As Label = Me.Controls("lblTotal")
+                If lblSubtotal IsNot Nothing Then lblSubtotal.Text = "Subtotal: ?0.00"
+                If lblTotal IsNot Nothing Then lblTotal.Text = "Total: ?0.00"
+
+                txtFullName.Text = String.Empty
+                txtPhone.Text = String.Empty
+                txtAddress.Text = String.Empty
+                If cmbPayment IsNot Nothing Then cmbPayment.SelectedIndex = 0
+
+                ' Notify other modules that inventory/cart changed so they can refresh
+                Try
+                    InventorySync.RaiseInventoryChanged(0, InventorySync.InventoryChangeType.OrderCompleted)
+                Catch ex As Exception
+                    Debug.WriteLine("InventorySync notify failed: " & ex.Message)
+                End Try
+            Catch ex As Exception
+                Debug.WriteLine("Post-order reset failed: " & ex.Message)
+            End Try
+
             ' Close checkout and return to shopping cart (which will refresh)
             Me.DialogResult = DialogResult.OK
             Me.Close()

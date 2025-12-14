@@ -51,6 +51,14 @@ Public Module StockManagementService
                     CheckAndCreateLowStockAlert(productId, productName, newStock, conn, transaction)
 
                     transaction.Commit()
+
+                    ' notify other modules about stock change
+                    Try
+                        InventorySync.RaiseInventoryChanged(productId, InventorySync.InventoryChangeType.Add)
+                    Catch ex As Exception
+                        Debug.WriteLine("InventorySync notify failed: " & ex.Message)
+                    End Try
+
                     Return New Tuple(Of Boolean, String)(True, $"Stock updated successfully. {productName}: {currentStock} ? {newStock}")
 
                 Catch ex As Exception
@@ -105,6 +113,14 @@ Public Module StockManagementService
                     CheckAndCreateLowStockAlert(productId, productName, newStock, conn, transaction)
 
                     transaction.Commit()
+
+                    ' notify other modules
+                    Try
+                        InventorySync.RaiseInventoryChanged(productId, InventorySync.InventoryChangeType.StockAdjusted)
+                    Catch ex As Exception
+                        Debug.WriteLine("InventorySync notify failed: " & ex.Message)
+                    End Try
+
                     Return New Tuple(Of Boolean, String)(True, $"Stock reduced successfully. {productName}: {currentStock} ? {newStock}")
 
                 Catch ex As Exception
@@ -156,6 +172,14 @@ Public Module StockManagementService
                     CheckAndCreateLowStockAlert(productId, productName, newStockValue, conn, transaction)
 
                     transaction.Commit()
+
+                    ' notify other modules
+                    Try
+                        InventorySync.RaiseInventoryChanged(productId, InventorySync.InventoryChangeType.Update)
+                    Catch ex As Exception
+                        Debug.WriteLine("InventorySync notify failed: " & ex.Message)
+                    End Try
+
                     Return New Tuple(Of Boolean, String)(True, $"Stock adjusted successfully. {productName}: {currentStock} ? {newStockValue}")
 
                 Catch ex As Exception

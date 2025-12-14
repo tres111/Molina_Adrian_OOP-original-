@@ -21,6 +21,13 @@ Private Sub ShoppingCartForm_Load(sender As Object, e As EventArgs) Handles MyBa
 
         CreateUI()
         LoadCartItems()
+
+        ' subscribe to inventory changes to keep cart consistent
+        Try
+            AddHandler InventorySync.InventoryChanged, AddressOf OnInventoryChanged
+        Catch ex As Exception
+            Debug.WriteLine("Failed to subscribe to InventorySync: " & ex.Message)
+        End Try
     End Sub
 
     Private Sub CreateUI()
@@ -262,5 +269,28 @@ Private Sub ShoppingCartForm_Load(sender As Object, e As EventArgs) Handles MyBa
         Else
             MessageBox.Show(result.Item3, "Invalid Code", MessageBoxButtons.OK, MessageBoxIcon.Warning)
         End If
+    End Sub
+
+    Private Sub OnInventoryChanged(sender As Object, e As InventorySync.InventoryChangeEventArgs)
+        Try
+            If Me.InvokeRequired Then
+                Me.BeginInvoke(New Action(Sub() OnInventoryChanged(sender, e)))
+                Return
+            End If
+
+            ' reload cart items and totals to reflect latest names/prices/availability
+            LoadCartItems()
+            UpdateTotal()
+        Catch ex As Exception
+            Debug.WriteLine("OnInventoryChanged (ShoppingCart) error: " & ex.Message)
+        End Try
+    End Sub
+
+    Protected Overrides Sub Dispose(disposing As Boolean)
+        Try
+            RemoveHandler InventorySync.InventoryChanged, AddressOf OnInventoryChanged
+        Catch
+        End Try
+        MyBase.Dispose(disposing)
     End Sub
 End Class

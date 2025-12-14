@@ -20,6 +20,34 @@ Public Property IsAdmin As Boolean
         adminNotificationService = New AdminNotificationService(repo)
         AddHandler adminNotificationService.NotificationCreated, AddressOf OnNotificationCreated
         InitializeNotificationPanel()
+
+        ' subscribe to inventory changes so main total updates when cart/order changes
+        Try
+            AddHandler InventorySync.InventoryChanged, AddressOf OnInventoryChanged
+        Catch ex As Exception
+            Debug.WriteLine("Failed to subscribe to InventorySync in Form1: " & ex.Message)
+        End Try
+    End Sub
+
+    Private Sub OnInventoryChanged(sender As Object, e As InventorySync.InventoryChangeEventArgs)
+        Try
+            If Me.InvokeRequired Then
+                Me.BeginInvoke(New Action(Sub() OnInventoryChanged(sender, e)))
+                Return
+            End If
+
+            ' Update main total label to reflect cleared cart or changes
+            UpdateTotal()
+        Catch ex As Exception
+            Debug.WriteLine("Form1 OnInventoryChanged error: " & ex.Message)
+        End Try
+    End Sub
+
+    Private Sub Form1_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            RemoveHandler InventorySync.InventoryChanged, AddressOf OnInventoryChanged
+        Catch
+        End Try
     End Sub
 
     Private Sub InitializeNotificationPanel()
