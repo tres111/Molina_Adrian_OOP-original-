@@ -20,7 +20,7 @@
 
         mainForm.UpdateTotal()
 
-        ' Show OUT OF STOCK badge for bottoms
+        ' Show OUT OF STOCK badge for bottoms try
         Try
             Dim panels = New Panel() {Panel1, Panel3, Panel5, Panel4, Panel7, Panel8, Panel9, Panel2, Nothing}
             For i = 0 To Math.Min(panels.Length - 1, Cart.productIdBottoms.Length - 1)
