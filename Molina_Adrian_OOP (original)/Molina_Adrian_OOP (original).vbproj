@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{587A16CC-A36A-4F8F-822E-4E45A693000C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>Molina_Adrian_OOP__original_.My.MyApplication</StartupObject>
+    <RootNamespace>Molina_Adrian_OOP__original_</RootNamespace>
+    <AssemblyName>Molina_Adrian_OOP %28original%29</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>Molina_Adrian_OOP %28original%29.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>Molina_Adrian_OOP %28original%29.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.Cryptography.2.6.2\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.32.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.32.0\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4, Version=1.3.8.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Compression.LZ4.1.3.8\lib\net462\K4os.Compression.LZ4.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Compression.LZ4.Streams, Version=1.3.8.0, Culture=neutral, PublicKeyToken=2186fa9121ef231d, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Compression.LZ4.Streams.1.3.8\lib\net462\K4os.Compression.LZ4.Streams.dll</HintPath>
+    </Reference>
+    <Reference Include="K4os.Hash.xxHash, Version=1.0.8.0, Culture=neutral, PublicKeyToken=32cd54395057cec3, processorArchitecture=MSIL">
+      <HintPath>..\packages\K4os.Hash.xxHash.1.0.8\lib\net462\K4os.Hash.xxHash.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=9.5.0.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.9.5.0\lib\net462\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.ConfigurationManager, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Configuration.ConfigurationManager.8.0.0\lib\net462\System.Configuration.ConfigurationManager.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Pipelines, Version=5.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Pipelines.5.0.2\lib\net461\System.IO.Pipelines.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.1.2\lib\net462\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="ZstdSharp, Version=0.8.6.0, Culture=neutral, PublicKeyToken=8d151af33a4ad5cf, processorArchitecture=MSIL">
+      <HintPath>..\packages\ZstdSharp.Port.0.8.6\lib\net462\ZstdSharp.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accessories.Designer.vb">
+      <DependentUpon>Accessories.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Accessories.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminDashboard.vb" />
+    <Compile Include="AdminNotificationService.vb" />
+    <Compile Include="AdminPanel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminUser.vb" />
+    <Compile Include="AnalyticsEngine.vb" />
+    <Compile Include="Bottoms.Designer.vb">
+      <DependentUpon>Bottoms.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Bottoms.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cart.vb" />
+    <Compile Include="CheckoutForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConcurrentStockManager.vb" />
+    <Compile Include="DBAuthentication.vb" />
+    <Compile Include="DBEcommerce.vb" />
+    <Compile Include="DBmySql.vb" />
+    <Compile Include="DeliveryDetailsForm.Designer.vb">
+      <DependentUpon>DeliveryDetailsForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="DeliveryDetailsForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Footwear.Designer.vb">
+      <DependentUpon>Footwear.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Footwear.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormValidator.vb" />
+    <Compile Include="Inventory.Designer.vb">
+      <DependentUpon>Inventory.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Inventory.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InventoryAnalytics.vb" />
+    <Compile Include="InventoryAuditManager.vb" />
+    <Compile Include="LoginForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoyaltyProgramManager.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="NotificationService.vb" />
+    <Compile Include="OrderHistoryForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderReviewForm.Designer.vb">
+      <DependentUpon>OrderReviewForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="OrderReviewForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductIntegration.vb" />
+    <Compile Include="ProductManagementService.vb" />
+    <Compile Include="ProductReviewsForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegisterForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchAndFilterManager.vb" />
+    <Compile Include="SessionManager.vb" />
+    <Compile Include="ShoppingCartForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SqlNotificationRepository.vb" />
+    <Compile Include="StockAlertManager.vb" />
+    <Compile Include="StockManagementService.vb" />
+    <Compile Include="StockReportForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Top.Designer.vb">
+      <DependentUpon>Top.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Top.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserProfileForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WishlistForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Accessories.resx">
+      <DependentUpon>Accessories.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Bottoms.resx">
+      <DependentUpon>Bottoms.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Footwear.resx">
+      <DependentUpon>Footwear.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Inventory.resx">
+      <DependentUpon>Inventory.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginForm.resx">
+      <DependentUpon>LoginForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegisterForm.resx">
+      <DependentUpon>RegisterForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Top.resx">
+      <DependentUpon>Top.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ADMIN_SYSTEM_QUICK_START.md" />
+    <None Include="BUILD_FIX_COMPLETE.md" />
+    <None Include="COMPLETE_DELIVERY_SUMMARY.md" />
+    <None Include="COMPLETE_DOCUMENTATION_INDEX.md" />
+    <None Include="COMPLETE_PROBLEM_ANALYSIS_SOLUTION.md" />
+    <None Include="COMPLETE_PROJECT_STATUS_FINAL.md" />
+    <None Include="COMPLETE_SYSTEM_ALIGNMENT_VERIFICATION.md" />
+    <None Include="DELIVERY_COMPLETE.md" />
+    <None Include="DOCUMENTATION_INDEX.md" />
+    <None Include="EXECUTIVE_SUMMARY.md" />
+    <None Include="FINAL_COMPLETION_CERTIFICATE.md" />
+    <None Include="FINAL_COMPLETION_STATUS.md" />
+    <None Include="FINAL_COMPREHENSIVE_STATUS.md" />
+    <None Include="FINAL_RESTORATION_REPORT.md" />
+    <None Include="FINAL_SYSTEM_STATUS.md" />
+    <None Include="FORMS_RESTORED.md" />
+    <None Include="FORMS_VERIFIED_CLEAN.md" />
+    <None Include="FORM_ERRORS_FIXED.md" />
+    <None Include="MASTER_IMPLEMENTATION_GUIDE.md" />
+    <None Include="MODERNIZATION_COMPLETE.md" />
+    <None Include="MODERNIZATION_DELIVERY_FINAL.md" />
+    <None Include="MODERNIZATION_PROJECT_COMPLETE.md" />
+    <None Include="MODERNIZATION_ROADMAP.md" />
+    <None Include="MODERN_UI_DESIGN_COMPLETE.md" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+    <None Include="PROJECT_RESTORATION_SUCCESS.md" />
+    <None Include="QUICK_START_GUIDE.md" />
+    <None Include="QUICK_START_UI_REDESIGN.md" />
+    <None Include="REDESIGN_DELIVERY_FINAL.md" />
+    <None Include="RESTORATION_COMPLETE.md" />
+    <None Include="START_HERE.md" />
+    <None Include="SYSTEM_ALIGNMENT_COMPLETE.md" />
+    <None Include="TROUBLESHOOTING_COMPLETE_GUIDE.md" />
+    <None Include="UI_REDESIGN_COMPLETE_FINAL.md" />
+    <None Include="VISUAL_DESIGN_GUIDE.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Green Blue and White Minimalist Landscape Desktop Wallpaper.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Green Blue and White Minimalist Landscape Desktop Wallpaper %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Screenshot 2025-11-21 083143.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Green Blue and51515151.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fqfqfq.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\fqfqfqt1t.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\jutjtujt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\7.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\8.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\10.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\13.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\17.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\18.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\131.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\14.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\15.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\171.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\181.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\19.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\20.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\21.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\27.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\28.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\30.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\31.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\22.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\23.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\231.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\25.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\26.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\271.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Black White Elegant Classic Minimalist Personal Monogram Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DATABASE_SCHEMA.sql" />
+    <Content Include="MODERNIZATION_SCHEMA.sql" />
+    <Content Include="STOCK_MANAGEMENT_SQL.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="migrations\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+</Project>
