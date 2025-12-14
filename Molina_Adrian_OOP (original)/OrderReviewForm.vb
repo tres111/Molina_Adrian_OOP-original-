@@ -56,8 +56,7 @@ Public Class OrderReviewForm
     End Sub
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
-        ' Proceed to finalize order: save to DB, reduce stock, send notifications
-        ' Show delivery details popup
+        ' Proceed to finalize order: show delivery details popup and then create order once
         Dim dlg As New DeliveryDetailsForm(orderItems, orderItems.Sum(Function(i) i.TotalPrice))
         dlg.StartPosition = FormStartPosition.CenterParent
         dlg.FormBorderStyle = FormBorderStyle.FixedDialog
@@ -69,33 +68,53 @@ Public Class OrderReviewForm
             Return
         End If
 
-        ' Create order
-        Dim userId = SessionManager.CurrentUserId
-        Dim orderId = DBmySql.CreateOrder(userId, dlg.FullName, dlg.Mobile, dlg.Email, dlg.Address, dlg.DeliveryMethod, dlg.PaymentMethod, dlg.Notes, orderItems.Sum(Function(i) i.TotalPrice), dlg.DeliveryFee, dlg.Total)
-
-        ' Save order items and reduce stock
-        For Each it In orderItems
-            Dim pid As Integer = DBmySql.GetProductIdByName(it.ProductName)
-            DBmySql.CreateOrderItem(orderId, pid, it.ProductName, it.UnitPrice, it.Quantity)
-            If pid > 0 Then
-                DBmySql.ReduceStockById(pid, it.Quantity)
-            Else
-                DBmySql.ReduceStock(it.ProductName, it.Quantity)
-            End If
-        Next
-
-        ' Notify admin with real order id
         Try
-            If parentForm IsNot Nothing Then
-                parentForm.Notifications.SendOrderStatusNotification(1, orderId, "Placed", parentForm.Username, orderItems.Sum(Function(i) i.TotalPrice))
-            End If
-        Catch ex As Exception
-            Debug.WriteLine("Failed to send order notification: " & ex.Message)
-        End Try
+            ' Create order here (single place)
+            Dim userId = SessionManager.CurrentUserId
+            Dim orderId = DBmySql.CreateOrder(userId, dlg.FullName, dlg.Mobile, dlg.Email, dlg.Address, dlg.DeliveryMethod, dlg.PaymentMethod, dlg.Notes, orderItems.Sum(Function(i) i.TotalPrice), dlg.DeliveryFee, dlg.Total)
 
-        MessageBox.Show("Order placed successfully! Order #" & orderId.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
-        parentForm.UpdateTotal()
-        Me.Close()
+            ' Save order items and reduce stock
+            For Each it In orderItems
+                Dim pid As Integer = DBmySql.GetProductIdByName(it.ProductName)
+                DBmySql.CreateOrderItem(orderId, pid, it.ProductName, it.UnitPrice, it.Quantity)
+                If pid > 0 Then
+                    DBmySql.ReduceStockById(pid, it.Quantity)
+                Else
+                    DBmySql.ReduceStock(it.ProductName, it.Quantity)
+                End If
+            Next
+
+            ' Clear local cart and DB cart
+            Try
+                Cart.ResetCart()
+            Catch
+            End Try
+            Try
+                DBEcommerce.ClearCart(userId)
+            Catch
+            End Try
+
+            ' Notify inventory and UI
+            Try
+                InventorySync.RaiseInventoryChanged(0, InventorySync.InventoryChangeType.OrderCompleted)
+            Catch
+            End Try
+
+            ' Notify admin
+            Try
+                If parentForm IsNot Nothing Then
+                    parentForm.Notifications.SendOrderStatusNotification(1, orderId, "Placed", parentForm.Username, orderItems.Sum(Function(i) i.TotalPrice))
+                End If
+            Catch ex As Exception
+                Debug.WriteLine("Failed to send order notification: " & ex.Message)
+            End Try
+
+            MessageBox.Show("Order placed successfully! Order #" & orderId.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            parentForm.UpdateTotal()
+            Me.Close()
+        Catch ex As Exception
+            MessageBox.Show("Failed to place order: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
     End Sub
 
     Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click

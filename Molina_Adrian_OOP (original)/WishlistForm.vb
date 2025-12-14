@@ -14,6 +14,13 @@ Private Sub WishlistForm_Load(sender As Object, e As EventArgs) Handles MyBase.L
         userId = DBAuthentication.GetCurrentUserId()
         CreateUI()
         LoadWishlist()
+
+        ' subscribe to inventory changes
+        Try
+            AddHandler InventorySync.InventoryChanged, AddressOf OnInventoryChanged
+        Catch ex As Exception
+            Debug.WriteLine("Failed to subscribe to InventorySync: " & ex.Message)
+        End Try
     End Sub
 
     Private Sub CreateUI()
@@ -155,4 +162,25 @@ Private Sub WishlistForm_Load(sender As Object, e As EventArgs) Handles MyBase.L
     Private Sub BtnClose_Click(sender As Object, e As EventArgs)
         Me.Close()
     End Sub
+
+    Private Sub OnInventoryChanged(sender As Object, e As InventorySync.InventoryChangeEventArgs)
+    Try
+        If Me.InvokeRequired Then
+            Me.BeginInvoke(New Action(Sub() OnInventoryChanged(sender, e)))
+            Return
+        End If
+
+        LoadWishlist()
+    Catch ex As Exception
+        Debug.WriteLine("OnInventoryChanged (Wishlist) error: " & ex.Message)
+    End Try
+End Sub
+
+Protected Overrides Sub Dispose(disposing As Boolean)
+    Try
+        RemoveHandler InventorySync.InventoryChanged, AddressOf OnInventoryChanged
+    Catch
+    End Try
+    MyBase.Dispose(disposing)
+End Sub
 End Class

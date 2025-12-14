@@ -266,7 +266,7 @@ Partial Public Class DeliveryDetailsForm
     End Sub
 
     Private Sub btnConfirm_Click(sender As Object, e As EventArgs)
-        ' Confirm: validate, create order, create order items, reduce stock, close with OK
+        ' Confirm: validate input and return collected data to caller (OrderReviewForm)
         Try
             If Not ValidateInput() Then Return
             FullName = txtFullName.Text.Trim()
@@ -285,26 +285,11 @@ Partial Public Class DeliveryDetailsForm
             DeliveryFee = If(DeliveryMethod = "Courier", 50D, 0D)
             Total = orderSubtotal + DeliveryFee
 
-            ' Save to DB
-            Dim userId = SessionManager.CurrentUserId
-            Dim orderId = DBmySql.CreateOrder(userId, FullName, Mobile, Email, Address, DeliveryMethod, PaymentMethod, Notes, orderSubtotal, DeliveryFee, Total)
-
-            ' Save order items and reduce stock
-            For Each it In orderItems
-                Dim pid As Integer = DBmySql.GetProductIdByName(it.ProductName)
-                DBmySql.CreateOrderItem(orderId, pid, it.ProductName, it.UnitPrice, it.Quantity)
-                If pid > 0 Then
-                    DBmySql.ReduceStockById(pid, it.Quantity)
-                Else
-                    DBmySql.ReduceStock(it.ProductName, it.Quantity)
-                End If
-            Next
-
-            MessageBox.Show("Order placed successfully! Order #" & orderId.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
+            ' Set dialog result only; actual order creation is handled by the calling form (OrderReviewForm)
             Me.DialogResult = DialogResult.OK
             Me.Close()
         Catch ex As Exception
-            MessageBox.Show("Failed to place order: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Failed to confirm delivery details: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
 

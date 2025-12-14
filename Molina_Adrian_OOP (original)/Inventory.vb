@@ -98,6 +98,9 @@ Public Class Inventory
                     cmd.Parameters.AddWithValue("@price", price)
                     cmd.Parameters.AddWithValue("@stock", stock)
                     cmd.ExecuteNonQuery()
+                    ' get last inserted id and notify system
+                    Dim newId As Integer = Convert.ToInt32(cmd.LastInsertedId)
+                    InventorySync.RaiseInventoryChanged(newId, InventorySync.InventoryChangeType.Add)
                 End Using
             End Using
 
@@ -143,6 +146,9 @@ Public Class Inventory
                 End Using
             End Using
 
+            ' notify system of update
+            InventorySync.RaiseInventoryChanged(id, InventorySync.InventoryChangeType.Update)
+
             MessageBox.Show("Product updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
             LoadInventoryData()
             ClearTextBoxes()
@@ -174,6 +180,9 @@ Public Class Inventory
                     End Using
                 End Using
 
+                ' notify system of deletion
+                InventorySync.RaiseInventoryChanged(id, InventorySync.InventoryChangeType.Delete)
+
                 MessageBox.Show("Product deleted successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 LoadInventoryData()
                 ClearTextBoxes()
@@ -192,6 +201,8 @@ Public Class Inventory
                     Dim id As Integer = Convert.ToInt32(row.Cells("id").Value)
                     Dim newStock As Integer = Convert.ToInt32(row.Cells("stock").Value)
                     DBmySql.UpdateStock(id, newStock)
+                    ' notify system for each stock change
+                    InventorySync.RaiseInventoryChanged(id, InventorySync.InventoryChangeType.Save)
                 End If
             Next
             MessageBox.Show("Inventory updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information)

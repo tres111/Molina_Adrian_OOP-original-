@@ -57,8 +57,75 @@
         Catch ex As Exception
             Debug.WriteLine("Error showing out of stock badges: " & ex.Message)
         End Try
+
+        ' subscribe to inventory changes
+        Try
+            AddHandler InventorySync.InventoryChanged, AddressOf OnInventoryChanged
+        Catch ex As Exception
+            Debug.WriteLine("Failed subscribing to InventorySync: " & ex.Message)
+        End Try
     End Sub
 
+    Private Sub OnInventoryChanged(sender As Object, e As InventorySync.InventoryChangeEventArgs)
+        Try
+            ' update badges on UI thread
+            If Me.InvokeRequired Then
+                Me.BeginInvoke(New Action(Sub() OnInventoryChanged(sender, e)))
+                Return
+            End If
+
+            Dim panels = New Panel() {Panel1, Panel2, Panel3, Panel4, Panel5, Panel6, Panel7, Panel8, Panel9}
+            For i = 0 To Math.Min(panels.Length - 1, Cart.productIdTop.Length - 1)
+                Try
+                    Dim p = panels(i)
+                    If p Is Nothing Then Continue For
+                    Dim pid = Cart.productIdTop(i)
+                    Dim name = Cart.topProducts(i)
+                    Dim outOfStock As Boolean = False
+                    If pid > 0 Then
+                        outOfStock = DBmySql.IsOutOfStockById(pid)
+                    Else
+                        outOfStock = DBmySql.IsOutOfStock(name)
+                    End If
+
+                    Dim existing = p.Controls.Find("lblOutOfStock", False)
+                    If outOfStock Then
+                        If existing.Length = 0 Then
+                            Dim badge As New Label()
+                            badge.Name = "lblOutOfStock"
+                            badge.Text = "OUT OF STOCK"
+                            badge.BackColor = Drawing.Color.FromArgb(180, Drawing.Color.DarkRed)
+                            badge.ForeColor = Drawing.Color.White
+                            badge.AutoSize = False
+                            badge.TextAlign = ContentAlignment.MiddleCenter
+                            badge.Font = New Drawing.Font("Segoe UI", 10.0!, Drawing.FontStyle.Bold)
+                            badge.Size = New Drawing.Size(p.Width, 24)
+                            badge.Location = New Drawing.Point(0, 0)
+                            p.Controls.Add(badge)
+                            badge.BringToFront()
+                        End If
+                    Else
+                        If existing.Length > 0 Then
+                            For Each c In existing
+                                p.Controls.Remove(c)
+                            Next
+                        End If
+                    End If
+                Catch ex As Exception
+                    Debug.WriteLine("Error updating badge: " & ex.Message)
+                End Try
+            Next
+        Catch ex As Exception
+            Debug.WriteLine("OnInventoryChanged error: " & ex.Message)
+        End Try
+    End Sub
+
+    Private Sub Top_FormClosed(sender As Object, e As FormClosedEventArgs) Handles Me.FormClosed
+        Try
+            RemoveHandler InventorySync.InventoryChanged, AddressOf OnInventoryChanged
+        Catch
+        End Try
+    End Sub
 
     ' ============================================================
     ' ITEM 1 (Index 0)
